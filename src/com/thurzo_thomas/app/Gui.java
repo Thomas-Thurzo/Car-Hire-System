@@ -20,6 +20,9 @@ public class Gui {
     private CarService carService = new CarService();
     private UserService userService = new UserService();
     private BookingService bookingService = new BookingService();
+    private CarDao carDao = new CarDao();
+    private BookingDao bookingDao = new BookingDao();
+    private UserDao userDao = new UserDao();
 
     // User Input processing
     public void start() {
@@ -97,8 +100,12 @@ public class Gui {
         }
 
         // Book the car
-        bookingService.bookCar(UUID.fromString(inputUserId), inputNumberPlate);
-        System.out.println("Successfully booked a car 😊");
+        if(bookingService.bookCar(UUID.fromString(inputUserId), inputNumberPlate)){
+            System.out.println("Successfully booked a car 😊");
+        }else{
+            System.out.println("Sorry, something went wrong. No Booking! ❌");
+        }
+
     }
 
     // Number 2 - View all User Booked Cars
@@ -115,26 +122,24 @@ public class Gui {
             return;
         }
 
-        System.out.println("Bookings for User: " + inputUserId);
-        System.out.println("");
+        Booking[] bookings = bookingService.getAllBookingsForSpecificUser(UUID.fromString(inputUserId));
         int bookingCounter = 0;
-        for (int i = 0; i < BookingDao.getBookings().length; i++) {
-            if(BookingDao.getBookings()[i] != null && BookingDao.getBookings()[i].getUserId().equals(inputUserId)){
-                System.out.println("Booking ID: " + BookingDao.getBookings()[i].getBookingId());
-                System.out.println("-----");
+        for(Booking booking : bookings){
+            if(booking != null){
                 bookingCounter ++;
+                System.out.println("Bookings for User: " + inputUserId);
+                System.out.println("Booking ID: " + booking.getBookingId());
             }
         }
         if(bookingCounter == 0){
-            System.out.println("Sorry, no bookings for this ID! 😓");
-            System.out.println();
+            System.out.println("Sorry, no bookings for this User! 😓");
         }
     }
 
     // Number 3 - View all Bookings
     private void viewAllBookings(){
         int bookingCounter = 0;
-        for(Booking booking : BookingDao.getBookings()){
+        for(Booking booking : bookingDao.getBookings()){
             if(booking != null){
                 System.out.println("Booking ID: " + booking.getBookingId());
                 System.out.println("-----");
@@ -149,7 +154,7 @@ public class Gui {
 
     // Number 4 - View all available Cars
     private void viewAvailableCars(){
-        for (Car car : CarDao.getCars()){
+        for (Car car : carDao.getCars()){
             System.out.println("Car Model: " + car.getCarModel());
             System.out.println("License Plate: " + car.getNumberPlate());
             if(car.getAvailable()){
@@ -164,7 +169,7 @@ public class Gui {
 
     // Number 5 - View all available electric Cars
     private void viewAvailableElectricCars(){
-        for (Car car : CarDao.getCars()){
+        for (Car car : carDao.getCars()){
             if(car.getElectric()){
                 System.out.println("Car Model: " + car.getCarModel());
                 System.out.println("License Plate: " + car.getNumberPlate());
@@ -182,7 +187,7 @@ public class Gui {
 
     // Number 6 - View all Users
     private void viewAllUsers(){
-        for (User user : UserDao.getUsers()){
+        for (User user : userDao.getUsers()){
             System.out.println("User ID: " + user.getUserId());
             System.out.println("First Name: " + user.getFirstName());
             System.out.println("Last Name: " + user.getLastName());

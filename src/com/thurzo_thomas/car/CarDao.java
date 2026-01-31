@@ -14,7 +14,7 @@ public class CarDao {
         };
     }
 
-    public static Car[] getCars() {
+    public Car[] getCars() {
         return cars;
     }
 }

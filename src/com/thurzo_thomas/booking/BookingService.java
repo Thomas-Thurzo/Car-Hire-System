@@ -4,14 +4,28 @@ import java.util.UUID;
 
 public class BookingService {
 
-    // Book a Car
-    public void bookCar(UUID userId, String numberPlate){
+    private BookingDao bookingDao = new BookingDao();
+
+    public boolean bookCar(UUID userId, String numberPlate){
         Booking booking = new Booking(userId, numberPlate);
-        for (int i = 0; i < BookingDao.getBookings().length; i++) {
-            if (BookingDao.getBookings()[i] == null){
-                BookingDao.getBookings()[i] = booking;
-                break;
+        for (int i = 0; i < bookingDao.getBookings().length; i++) {
+            if (bookingDao.getBookings()[i] == null){
+                bookingDao.getBookings()[i] = booking;
+                return true;
             }
         }
+        return false;
     }
+
+    public Booking[] getAllBookingsForSpecificUser(UUID userId){
+        Booking[] bookings = new Booking[bookingDao.getBookings().length];
+        for (int i = 0; i < bookingDao.getBookings().length; i++) {
+            if(bookingDao.getBookings()[i] != null && bookingDao.getBookings()[i].getUserId().equals(userId)){
+                bookings[i] = bookingDao.getBookings()[i];
+            }
+        }
+        return bookings;
+    }
+
+
 }
