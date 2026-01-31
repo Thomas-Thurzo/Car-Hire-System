@@ -1,10 +1,17 @@
 package com.thurzo_thomas.app;
 
+import com.thurzo_thomas.booking.Booking;
+import com.thurzo_thomas.booking.BookingDao;
 import com.thurzo_thomas.booking.BookingService;
+import com.thurzo_thomas.car.Car;
+import com.thurzo_thomas.car.CarDao;
 import com.thurzo_thomas.car.CarService;
+import com.thurzo_thomas.user.User;
+import com.thurzo_thomas.user.UserDao;
 import com.thurzo_thomas.user.UserService;
 
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Gui {
 
@@ -22,25 +29,25 @@ public class Gui {
             String userInput = scanner.nextLine();
             switch (userInput) {
                 case "1":
-                    bookingService.bookCar();
+                    bookCar();
                     break;
                 case "2":
-                    userService.showUserBookedCars();
+                    viewUserBookedCars();
                     break;
                 case "3":
-                    bookingService.viewAllBookings();
+                    viewAllBookings();
                     break;
                 case "4":
-                    carService.viewAvailableCars();
+                    viewAvailableCars();
                     break;
                 case "5":
-                    carService.viewAvailableElectricCars();
+                    viewAvailableElectricCars();
                     break;
                 case "6":
-                    userService.viewAllUsers();
+                    viewAllUsers();
                     break;
                 case "7":
-                    bookingService.deleteBooking();
+                    System.out.println("Not implemented, yet!");
                     break;
                 case "8":
                     System.out.println("Good Bye 😊");
@@ -64,4 +71,127 @@ public class Gui {
         System.out.println("8️⃣ - Exit");
         System.out.print("Choose an option: ");
     }
+
+    // Number 1 - Book a car
+    private void bookCar(){
+        // User Input ID
+        viewAllUsers();
+        System.out.println("➡️ Select a user ID");
+        String inputUserId = scanner.nextLine();
+        if(!userService.isValidUUID(inputUserId)){
+            System.out.println("Your input is not a valid User ID! ❌");
+            return;
+        }
+        if(userService.getUserById(UUID.fromString(inputUserId)) == null){
+            System.out.println("Your User ID is not available! ❌");
+            return;
+        }
+
+        // User Input for Number Plate
+        viewAvailableCars();
+        System.out.println("➡️ Select a car number plate");
+        String inputNumberPlate = scanner.nextLine();
+        if(carService.getCarByPlateNumber(inputNumberPlate) == null){
+            System.out.println("Your Number Plate is not available! ❌");
+            return;
+        }
+
+        // Book the car
+        bookingService.bookCar(UUID.fromString(inputUserId), inputNumberPlate);
+        System.out.println("Successfully booked a car 😊");
+    }
+
+    // Number 2 - View all User Booked Cars
+    private void viewUserBookedCars(){
+        viewAllUsers();
+        System.out.println("➡️ Select a user ID");
+        String inputUserId = scanner.nextLine();
+        if(!userService.isValidUUID(inputUserId)){
+            System.out.println("Your input is not a valid User ID! ❌");
+            return;
+        }
+        if(userService.getUserById(UUID.fromString(inputUserId)) == null){
+            System.out.println("Your User ID is not available! ❌");
+            return;
+        }
+
+        System.out.println("Bookings for User: " + inputUserId);
+        System.out.println("");
+        int bookingCounter = 0;
+        for (int i = 0; i < BookingDao.getBookings().length; i++) {
+            if(BookingDao.getBookings()[i] != null && BookingDao.getBookings()[i].getUserId().equals(inputUserId)){
+                System.out.println("Booking ID: " + BookingDao.getBookings()[i].getBookingId());
+                System.out.println("-----");
+                bookingCounter ++;
+            }
+        }
+        if(bookingCounter == 0){
+            System.out.println("Sorry, no bookings for this ID! 😓");
+            System.out.println();
+        }
+    }
+
+    // Number 3 - View all Bookings
+    private void viewAllBookings(){
+        int bookingCounter = 0;
+        for(Booking booking : BookingDao.getBookings()){
+            if(booking != null){
+                System.out.println("Booking ID: " + booking.getBookingId());
+                System.out.println("-----");
+                bookingCounter ++;
+            }
+        }
+        if (bookingCounter == 0){
+            System.out.println("Sorry, no bookings at the moment! 😓");
+            System.out.println();
+        }
+    }
+
+    // Number 4 - View all available Cars
+    private void viewAvailableCars(){
+        for (Car car : CarDao.getCars()){
+            System.out.println("Car Model: " + car.getCarModel());
+            System.out.println("License Plate: " + car.getNumberPlate());
+            if(car.getAvailable()){
+                System.out.println("Available: 🆓");
+                System.out.println();
+            }else{
+                System.out.println("Sorry not available! ®️");
+                System.out.println();
+            }
+        }
+    }
+
+    // Number 5 - View all available electric Cars
+    private void viewAvailableElectricCars(){
+        for (Car car : CarDao.getCars()){
+            if(car.getElectric()){
+                System.out.println("Car Model: " + car.getCarModel());
+                System.out.println("License Plate: " + car.getNumberPlate());
+                if(car.getAvailable()){
+                    System.out.println("Available: 🆓");
+                    System.out.println();
+                }else{
+                    System.out.println("Sorry not available! ®️");
+                    System.out.println();
+                }
+            }
+
+        }
+    }
+
+    // Number 6 - View all Users
+    private void viewAllUsers(){
+        for (User user : UserDao.getUsers()){
+            System.out.println("User ID: " + user.getUserId());
+            System.out.println("First Name: " + user.getFirstName());
+            System.out.println("Last Name: " + user.getLastName());
+            System.out.println("-----");
+            System.out.println();
+        }
+    }
+
+
+
+
 }

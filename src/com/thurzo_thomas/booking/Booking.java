@@ -1,26 +1,28 @@
 package com.thurzo_thomas.booking;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Booking {
     // Fields
-    private final String userId;
+    private final UUID bookingId;
+    private final UUID userId;
     private final String numberPlate;
-    private final String bookingId;
-    private final LocalDateTime bookingTime;
-
 
     // Constructor
-    public Booking(String userId, String numberPlate) {
+    public Booking(UUID userId, String numberPlate) {
+        this.bookingId = UUID.randomUUID();
         this.userId = userId;
         this.numberPlate = numberPlate;
-        this.bookingTime = LocalDateTime.now();
-        this.bookingId = UUID.randomUUID().toString();
     }
 
     // Getter
-    public String getUserId() {
+    public UUID getBookingId() {
+        return bookingId;
+    }
+
+    public UUID getUserId() {
         return userId;
     }
 
@@ -28,21 +30,24 @@ public class Booking {
         return numberPlate;
     }
 
-    public String getBookingId() {
-        return bookingId;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Booking booking = (Booking) o;
+        return Objects.equals(bookingId, booking.bookingId) && Objects.equals(userId, booking.userId) && Objects.equals(numberPlate, booking.numberPlate);
     }
 
-    public LocalDateTime getBookingTime() {
-        return bookingTime;
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookingId, userId, numberPlate);
     }
 
     @Override
     public String toString() {
         return "Booking{" +
-                "userId='" + userId + '\'' +
+                "bookingId=" + bookingId +
+                ", userId=" + userId +
                 ", numberPlate='" + numberPlate + '\'' +
-                ", bookingId='" + bookingId + '\'' +
-                ", bookingTime=" + bookingTime +
                 '}';
     }
 }

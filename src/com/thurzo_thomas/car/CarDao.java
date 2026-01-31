@@ -6,10 +6,11 @@ public class CarDao {
 
     static {
         cars = new Car[]{
-                new Car(CarModel.BMW, "BD5I SMR", true, false, 4, "Blue"),
-                new Car(CarModel.PORSCHE, "LA22 XYZ", true, false, 2, "Black"),
-                new Car(CarModel.VOLKSWAGEN, "LY74 ABC", true, false, 6, "White"),
-                new Car(CarModel.VOLKSWAGEN, "LY68 CDE", true, true, 4, "Blue"),
+                new Car("LD20 HXA", CarModel.BMW,  "Blue", true, false, 4 ),
+                new Car("LX68 BPF", CarModel.VOLKSWAGEN,  "White", true, false, 4 ),
+                new Car("LN72 KDJ", CarModel.PORSCHE,  "Black", true, false, 2 ),
+                new Car("LO15 VCR", CarModel.AUDI,  "Yellow", true, false, 4 ),
+                new Car("LS19 MTE", CarModel.VOLKSWAGEN,  "Red", true, true, 4 ),
         };
     }
 
