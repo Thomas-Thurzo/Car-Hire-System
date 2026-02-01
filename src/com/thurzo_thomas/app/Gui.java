@@ -9,20 +9,19 @@ import com.thurzo_thomas.car.CarService;
 import com.thurzo_thomas.user.User;
 import com.thurzo_thomas.user.UserDao;
 import com.thurzo_thomas.user.UserService;
-
 import java.util.Scanner;
 import java.util.UUID;
 
 public class Gui {
 
     // Fields
-    private Scanner scanner = new Scanner(System.in);
-    private CarService carService = new CarService();
-    private UserService userService = new UserService();
-    private BookingService bookingService = new BookingService();
-    private CarDao carDao = new CarDao();
-    private BookingDao bookingDao = new BookingDao();
-    private UserDao userDao = new UserDao();
+    private final Scanner scanner = new Scanner(System.in);
+    private final CarService carService = new CarService();
+    private final UserService userService = new UserService();
+    private final BookingService bookingService = new BookingService();
+    private final CarDao carDao = new CarDao();
+    private final BookingDao bookingDao = new BookingDao();
+    private final UserDao userDao = new UserDao();
 
     // User Input processing
     public void start() {
