@@ -1,5 +1,0 @@
-Thomas Action 90c13a14-c5ed-4960-9c8f-4a5637322f5a
-John Smith 97012013-0a72-46e9-9e06-e2de3f494e1a
-Peter Foo 99b642f5-d009-47bf-b6f4-017b76ce8600
-James Bar eb394641-c451-419f-b6cd-e6f7662e0628
-Susan Wheeler 5768bb08-f012-4b9c-889a-63ebebd0acce

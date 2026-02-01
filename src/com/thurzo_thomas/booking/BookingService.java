@@ -27,5 +27,15 @@ public class BookingService {
         return bookings;
     }
 
+    public boolean deleteBooking(UUID bookingId){
+        for (int i = 0; i < bookingDao.getBookings().length; i++) {
+            if (bookingDao.getBookings()[i].getBookingId().equals(bookingId)){
+                bookingDao.getBookings()[i] = null;
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

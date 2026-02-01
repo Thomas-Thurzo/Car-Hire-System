@@ -49,7 +49,7 @@ public class Gui {
                     viewAllUsers();
                     break;
                 case "7":
-                    System.out.println("Not implemented, yet!");
+                    deleteBooking();
                     break;
                 case "8":
                     System.out.println("Good Bye 😊");
@@ -192,6 +192,23 @@ public class Gui {
             System.out.println("Last Name: " + user.getLastName());
             System.out.println("-----");
             System.out.println();
+        }
+    }
+
+    // Number 7 - Delete Booking
+    private void deleteBooking(){
+        System.out.println("All available Bookings: ");
+        viewAllBookings();
+        System.out.println("➡️ Select a Booking ID you want delete");
+        String inputBookingId = scanner.nextLine();
+        if(!userService.isValidUUID(inputBookingId)){
+            System.out.println("Your input is not a valid Booking ID! ❌");
+            return;
+        }
+        if(bookingService.deleteBooking(UUID.fromString(inputBookingId))){
+            System.out.println("You deleted successfully the Booking! 😊");
+        }else {
+            System.out.println("Your Booking ID does not exist. ❌");
         }
     }
 
