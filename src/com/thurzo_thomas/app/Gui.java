@@ -76,7 +76,7 @@ public class Gui {
 
     // Number 1 - Book a car
     private void bookCar(){
-        // User Input ID
+        // User Input and validation for User ID
         viewAllUsers();
         System.out.println("➡️ Select a user ID");
         String inputUserId = scanner.nextLine();
@@ -89,7 +89,7 @@ public class Gui {
             return;
         }
 
-        // User Input for Number Plate
+        // User Input and validation for Number Plate
         viewAvailableCars();
         System.out.println("➡️ Select a car number plate");
         String inputNumberPlate = scanner.nextLine();
@@ -100,11 +100,11 @@ public class Gui {
 
         // Book the car
         if(bookingService.bookCar(UUID.fromString(inputUserId), inputNumberPlate)){
+            carService.setCarNotAvailable(inputNumberPlate);
             System.out.println("Successfully booked a car 😊");
         }else{
             System.out.println("Sorry, something went wrong. No Booking! ❌");
         }
-
     }
 
     // Number 2 - View all User Booked Cars
