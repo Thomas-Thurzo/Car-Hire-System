@@ -4,10 +4,10 @@ import java.util.UUID;
 
 public class UserService {
 
-    UserDao userDao = new UserDao();
+    UserFileDataAccessService userFileDataAccessService = new UserFileDataAccessService();
 
     public User getUserById(UUID id){
-        for(User user : userDao.getUsers()){
+        for(User user : userFileDataAccessService.getUsers()){
             if(user.getUserId().equals(id)){
                 return user;
             }

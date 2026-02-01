@@ -6,9 +6,8 @@ import com.thurzo_thomas.booking.BookingService;
 import com.thurzo_thomas.car.Car;
 import com.thurzo_thomas.car.CarDao;
 import com.thurzo_thomas.car.CarService;
-import com.thurzo_thomas.user.User;
-import com.thurzo_thomas.user.UserDao;
-import com.thurzo_thomas.user.UserService;
+import com.thurzo_thomas.user.*;
+
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ public class Gui {
     private final BookingService bookingService = new BookingService();
     private final CarDao carDao = new CarDao();
     private final BookingDao bookingDao = new BookingDao();
-    private final UserDao userDao = new UserDao();
+    private final UserFileDataAccessService userFileDataAccessService = new UserFileDataAccessService();
 
     // User Input processing
     public void start() {
@@ -186,7 +185,7 @@ public class Gui {
 
     // Number 6 - View all Users
     private void viewAllUsers(){
-        for (User user : userDao.getUsers()){
+        for (User user : userFileDataAccessService.getUsers()){
             System.out.println("User ID: " + user.getUserId());
             System.out.println("First Name: " + user.getFirstName());
             System.out.println("Last Name: " + user.getLastName());

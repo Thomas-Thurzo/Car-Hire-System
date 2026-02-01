@@ -10,8 +10,8 @@ public class User {
     private final String lastName;
 
     // Constructor
-    public User(String firstName, String lastName) {
-        this.userId = UUID.randomUUID();
+    public User(UUID userId, String firstName, String lastName) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
     }
