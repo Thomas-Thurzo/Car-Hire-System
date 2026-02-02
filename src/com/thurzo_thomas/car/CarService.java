@@ -2,7 +2,11 @@ package com.thurzo_thomas.car;
 
 public class CarService {
 
-    CarDao carDao = new CarDao();
+    CarDao carDao;
+
+    public CarService(CarDao carDao) {
+        this.carDao = carDao;
+    }
 
     public void setCarNotAvailable(String numberPlate){
         for (int i = 0; i < carDao.getCars().length; i++) {

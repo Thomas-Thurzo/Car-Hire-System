@@ -4,7 +4,11 @@ import java.util.UUID;
 
 public class BookingService {
 
-    private final BookingDao bookingDao = new BookingDao();
+    BookingDao bookingDao;
+
+    public BookingService(BookingDao bookingDao) {
+        this.bookingDao = bookingDao;
+    }
 
     public boolean bookCar(UUID userId, String numberPlate){
         Booking booking = new Booking(userId, numberPlate);

@@ -7,20 +7,33 @@ import com.thurzo_thomas.car.Car;
 import com.thurzo_thomas.car.CarDao;
 import com.thurzo_thomas.car.CarService;
 import com.thurzo_thomas.user.*;
-
 import java.util.Scanner;
 import java.util.UUID;
 
 public class Gui {
 
     // Fields
-    private final Scanner scanner = new Scanner(System.in);
-    private final CarService carService = new CarService();
-    private final UserService userService = new UserService();
-    private final BookingService bookingService = new BookingService();
-    private final CarDao carDao = new CarDao();
-    private final BookingDao bookingDao = new BookingDao();
-    private final UserFileDataAccessService userFileDataAccessService = new UserFileDataAccessService();
+    private final Scanner scanner;
+    private final CarService carService;
+    private final UserService userService;
+    private final BookingService bookingService;
+    private final CarDao carDao;
+    private final BookingDao bookingDao;
+    private final UserFileDataAccessService userFileDataAccessService;
+
+    // Constructor
+
+    public Gui(Scanner scanner, CarService carService, UserService userService,
+               BookingService bookingService, CarDao carDao, BookingDao bookingDao,
+               UserFileDataAccessService userFileDataAccessService) {
+        this.scanner = scanner;
+        this.carService = carService;
+        this.userService = userService;
+        this.bookingService = bookingService;
+        this.carDao = carDao;
+        this.bookingDao = bookingDao;
+        this.userFileDataAccessService = userFileDataAccessService;
+    }
 
     // User Input processing
     public void start() {

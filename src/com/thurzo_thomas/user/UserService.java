@@ -4,7 +4,11 @@ import java.util.UUID;
 
 public class UserService {
 
-    UserFileDataAccessService userFileDataAccessService = new UserFileDataAccessService();
+    UserFileDataAccessService userFileDataAccessService;
+
+    public UserService(UserFileDataAccessService userFileDataAccessService) {
+        this.userFileDataAccessService = userFileDataAccessService;
+    }
 
     public User getUserById(UUID id){
         for(User user : userFileDataAccessService.getUsers()){
